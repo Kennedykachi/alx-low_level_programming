@@ -1,60 +1,23 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 /**
- * print_number - prints a number using _putchar
- * @n: number to print
- *
- * Return: void
+ * main - generates random passwords for 101-crackme
+ * Return: zero
  */
-void print_number(int n)
+int main(void)
 {
-	unsigned int un = 0;
+	int sum;
+	char c;
 
-	if (n < 0)
+	srand(time(NULL));
+	while (sum <= 2645)
 	{
-		if (n < 1000000000)
-			n = -n;
-		un = n;
-		_putchar(45);
-		num_to_char(n);
+		c = rand() % 128;
+		sum += c;
+		putchar(c);
 	}
-	else
-	{
-		un = n;
-		num_to_char(un);
-	}
-}
-
-/**
- * num_to_char - transforms a number with 1 or more digits into a char
- * @n: number to print
- *
- * Return: void
- */
-void num_to_char(unsigned int n)
-{
-	unsigned int d = 10;
-
-	if (n < d)
-	{
-		_putchar('0' + n);
-	}
-	else
-	{
-		while (n >= d)
-		{
-			d *= 10;
-			if (d == 1000000000)
-				break;
-		}
-		if (!(d == 1000000000) || n == 123456789)
-			d /= 10;
-		_putchar('0' + n / d);
-		while (d != 10)
-		{
-			d /= 10;
-			_putchar('0' + (n / d) % 10);
-		}
-		_putchar('0' + n % 10);
-	}
-}
+	putchar(2772 - sum);
+	return (0);
+}}
