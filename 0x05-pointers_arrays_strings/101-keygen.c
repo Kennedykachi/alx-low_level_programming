@@ -1,25 +1,60 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include "main.h"
 
 /**
- * main - generates random valid passwords
- * Return: 0 if success
+ * print_number - prints a number using _putchar
+ * @n: number to print
+ *
+ * Return: void
  */
-int main(void)
+void print_number(int n)
 {
-	int pass, sum;
+	unsigned int un = 0;
 
-	srand(time(NULL));
-	sum = 0;
-	while (sum <= 2645)
+	if (n < 0)
 	{
-		pass = (rand() % 128);
-		sum += pass;
-		printf("%c", pass);
+		if (n < 1000000000)
+			n = -n;
+		un = n;
+		_putchar(45);
+		num_to_char(n);
 	}
+	else
+	{
+		un = n;
+		num_to_char(un);
+	}
+}
 
-	printf("%c", 2772 - sum);
+/**
+ * num_to_char - transforms a number with 1 or more digits into a char
+ * @n: number to print
+ *
+ * Return: void
+ */
+void num_to_char(unsigned int n)
+{
+	unsigned int d = 10;
 
-	return (0);
+	if (n < d)
+	{
+		_putchar('0' + n);
+	}
+	else
+	{
+		while (n >= d)
+		{
+			d *= 10;
+			if (d == 1000000000)
+				break;
+		}
+		if (!(d == 1000000000) || n == 123456789)
+			d /= 10;
+		_putchar('0' + n / d);
+		while (d != 10)
+		{
+			d /= 10;
+			_putchar('0' + (n / d) % 10);
+		}
+		_putchar('0' + n % 10);
+	}
 }
