@@ -1,0 +1,1 @@
+more stingy linked lists
