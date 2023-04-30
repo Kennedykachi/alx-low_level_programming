@@ -1,39 +1,30 @@
 #include "hash_tables.h"
 
 /**
- * hash_table_print - Prints a hash table.
- * @ht: A pointer to the hash table to print.
+ * hash_table_get - Retrieve the value associated with
+ *                  a key in a hash table.
+ * @ht: A pointer to the hash table.
+ * @key: The key to get the value of.
  *
- * Description: Key/value pairs are printed in the order
- *              they appear in the array of the hash table.
+ * Return: If the key cannot be matched - NULL.
+ *         Otherwise - the value associated with key in ht.
  */
-void hash_table_print(const hash_table_t *ht)
+char *hash_table_get(const hash_table_t *ht, const char *key)
 {
 	hash_node_t *node;
-	unsigned long int i;
-	unsigned char comma_flag = 0;
+	unsigned long int index;
 
-	if (ht == NULL)
-		return;
+	if (ht == NULL || key == NULL || *key == '\0')
+		return (NULL);
 
-	printf("{");
-	for (i = 0; i < ht->size; i++)
-	{
-		if (ht->array[i] != NULL)
-		{
-			if (comma_flag == 1)
-				printf(", ");
+	index = key_index((const unsigned char *)key, ht->size);
+	if (index >= ht->size)
+		return (NULL);
 
-			node = ht->array[i];
-			while (node != NULL)
-			{
-				printf("'%s': '%s'", node->key, node->value);
-				node = node->next;
-				if (node != NULL)
-					printf(", ");
-			}
-			comma_flag = 1;
-		}
-	}
-	printf("}\n");
+	node = ht->array[index];
+	while (node && strcmp(node->key, key) != 0)
+		node = node->next;
+
+	return ((node == NULL) ? NULL : node->value);
 }
+
